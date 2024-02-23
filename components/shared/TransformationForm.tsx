@@ -164,11 +164,14 @@ const TransformationForm = ({
     debounce(() => {
       setNewTransformation((prevState: any) => ({
         ...prevState,
-        [type]: { ...prevState?.[type] },
-        [fieldName === "prompt" ? "prompt" : "to"]: value,
+        [type]: {
+          ...prevState?.[type],
+          [fieldName === "prompt" ? "prompt" : "to"]: value,
+        },
       }));
-      return onChangeField(value);
-    }, 1000);
+    }, 1000)();
+
+    return onChangeField(value);
   };
 
   const onTransformationHandler = async () => {
@@ -210,6 +213,7 @@ const TransformationForm = ({
                 onValueChange={(value: string) =>
                   onSelectFieldHandler(value, field.onChange)
                 }
+                value={field.value}
               >
                 <SelectTrigger className="select-field">
                   <SelectValue placeholder="Select size" />
