@@ -12,7 +12,7 @@ const populateUser = (query: any) =>
   query.populate({
     path: "author",
     model: User,
-    select: "_id firstName lastName",
+    select: "_id firstName lastName clerkId",
   });
 
 // ADD IMAGE
@@ -74,7 +74,7 @@ export async function getImageById(imageId: string) {
   try {
     await connectToDatabase();
 
-    const image = populateUser(await Image.findById(imageId));
+    const image = await populateUser(Image.findById(imageId));
     if (!image) {
       throw new Error("Image not found");
     }
